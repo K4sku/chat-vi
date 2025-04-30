@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<%= turbo_stream_from [@chat, "messages"] %>
+<h1>Chat <%= @chat.id %></h1>
+<div id="messages">
+  <%= render @chat.messages %>
+</div>
+<!-- Your form to submit new messages -->
+<%= form_with(model: [ @chat, Message.new ], method: :post) do |f| %>
+  <%= f.text_area :content %>
+  <%= f.submit "Send" %>
+<% end %>
+
+<div>
+  <%= link_to "Back to chats", chats_path %>
+
+  <%= button_to "Destroy this chat", @chat, method: :delete %>
+</div>
