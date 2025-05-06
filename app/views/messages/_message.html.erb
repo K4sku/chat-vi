@@ -1,9 +1,10 @@
 <%= turbo_frame_tag message do %>
-  <div class="message <%= message.role %>">
-    <strong><%= message.role.capitalize %>:</strong>
-    <%# Target div for streaming content %>
-    <div id="<%= dom_id(message, "content") %>" style="display: inline;">
-      <%# Render initial content if not streaming, otherwise job appends here %>
+  <div class="chat <%= message.role == "user" ? "chat-end" : "chat-start" %>">
+    <div class="chat-header">
+      <%= message.role.capitalize %>
+      <time class="text-xs opacity-50"><%= time_ago_in_words(message.updated_at) %></time>
+    </div>
+    <div class="chat-bubble" id="<%= dom_id(message, "content") %>">
       <%= simple_format(message.content) %>
     </div>
   </div>

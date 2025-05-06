@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="bumblebee">
   <head>
     <title><%= content_for(:title) || "Chat Vi" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,8 +23,28 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <div class="drawer lg:drawer-open">
+      <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content flex flex-col">
+        <div class="flex flex-col min-h-screen items-center justify-center">
+          <main class="container px-5 pt-5 flex-grow">
+            <%= yield %>
+          </main>
+        </div>
+        <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+          Open drawer
+        </label>
+      </div>
+      <div class="drawer-side">
+        <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+          <p><strong>Chat history</strong></p>
+          <% @chats.each do |chat| %>
+            <li><%= link_to chat.title || "Chat #{chat.id}", chat %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
   </body>
 </html>
