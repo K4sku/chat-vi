@@ -10,6 +10,7 @@ ChatVI is a Ruby on Rails application that provides a chat interface with AI mod
 - Rails 8.0.2
 - SQLite database
 - Hotwire (Turbo and Stimulus) for frontend interactivity
+- Tailwind CSS for styles
 - Docker for deployment
 
 ## Build/Configuration Instructions
