@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "chats#index"
   resources :chats do
+    get :edit_title, on: :member
     resources :messages
   end
 end

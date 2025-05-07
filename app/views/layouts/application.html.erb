@@ -40,7 +40,13 @@
         <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
           <p><strong>Chat history</strong></p>
           <% @chats.each do |chat| %>
-            <li><%= link_to chat.title || "Chat #{chat.id}", chat %></li>
+            <li>
+              <%= link_to chat do %>
+                <%= turbo_frame_tag chat do %>
+                  <%= render chat %>
+                <% end %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       </div>
