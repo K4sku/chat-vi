@@ -1,11 +1,63 @@
-<% content_for :title, "New chat" %>
+<% content_for :title, "New Chat" %>
 
-<h1>New chat</h1>
+<div class="relative flex flex-col h-full w-full">
+  <div class="p-3 border-b border-gray-200">
+    <h1 class="text-lg font-semibold text-gray-800">
+      New Chat
+    </h1>
+  </div>
 
-<%= render "form", chat: @chat %>
+  <div id="messages" class="flex-1 overflow-y-auto pb-20">
+    <%# Display errors if any %>
+    <% if @chat && @chat.errors.any? %>
+      <div class="p-4">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong class="font-bold">Please correct the following errors:</strong>
+          <ul class="mt-2 list-disc list-inside">
+            <% @chat.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% elsif @message && @message.errors.any? %>
+       <div class="p-4">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong class="font-bold">Please correct the following errors:</strong>
+          <ul class="mt-2 list-disc list-inside">
+            <% @message.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% else %>
+      <div class="p-4 text-center text-gray-500">
+        Select a model and send your first message to start a new chat.
+      </div>
+    <% end %>
+  </div>
 
-<br>
+  <div class="absolute bottom-0 inset-x-0 p-4 bg-white border-t border-gray-200">
+    <%= form_with(model: @chat, url: chats_path, method: :post, html: { class: "flex items-center space-x-2 w-full" }) do |f| %>
+      
+      <div class="flex-shrink-0">
+        <%= f.label :model_id, "Model:", class: "sr-only" %>
+        <%= f.select :model_id, 
+                       options_for_select(Chat::ALLOWED_MODELS, @chat.model_id), 
+                       { prompt: "Select Model" }, 
+                       { class: "select select-bordered w-full max-w-xs", required: true } %>
+      </div>
 
-<div>
-  <%= link_to "Back to chats", chats_path %>
+      <%= text_area_tag "message[content]",
+            @message&.content || params.dig(:message, :content),
+            class: "textarea textarea-bordered flex-1 w-full",
+            autocomplete: "off",
+            placeholder: "Send your first message...",
+            required: true,
+            rows: 1 %>
+      
+      <%= f.button "Start Chat", class: "btn btn-primary flex-shrink-0" %>
+    <% end %>
+  </div>
 </div>
