@@ -1,7 +1,7 @@
 <div class="relative flex flex-col h-full w-full">
   <%= turbo_stream_from [@chat, "messages"] %>
 
-  <div class="p-3 border-b border-gray-200">
+  <div class="p-3 border-b border-gray-200 flex justify-between items-center">
     <h1 class="text-lg font-semibold text-gray-800">
       <%= turbo_frame_tag @chat do %>
         <%= render @chat %>
@@ -12,6 +12,7 @@
         <% end %>
       <% end %>
     </h1>
+    <%= link_to "New Chat", new_chat_path, class: "btn btn-primary btn-sm" %>
   </div>
 
   <div id="messages" class="flex-1 overflow-y-auto pb-20">

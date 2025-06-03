@@ -3,11 +3,11 @@ class Chat < ApplicationRecord
 
   validates :model_id, presence: true
 
-  ALLOWED_MODELS = [
-    [ "Claude 3.5 Sonnet", "claude-3-5-sonnet" ],
-    [ "GPT-4.1", "gpt-4.1" ],
-    [ "Gemini 2.0 Flash", "gemini-2.0-flash" ]
-  ]
+  ALLOWED_MODELS = {
+    "claude-3-5-sonnet": "Claude 3.5 Sonnet",
+    "gpt-4.1": "GPT-4.1",
+    "gemini-2.0-flash": "Gemini 2.0 Flash"
+  }
 
   broadcasts_to ->(chat) { [ chat, "messages" ] }
 end
